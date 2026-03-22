@@ -19,16 +19,6 @@ jobs:
       - name: Install Wrangler CLI and dependencies
         run: npm install -g wrangler && npm install
 
-      - name: Authenticate with Cloudflare Registry
-        run: |
-          wrangler containers registries credentials --push --expiration-minutes 15 > /tmp/cf-registry-auth.json
-          cat /tmp/cf-registry-auth.json | docker login registry.cloudflare.com -u _cloudflare_containers_token --password-stdin
-
-      - name: Build and Push to Cloudflare Registry
-        run: |
-          docker build --platform linux/amd64 -t registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest .
-          docker push registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest
-
       - name: Deploy to Cloudflare Workers
         run: wrangler deploy
         env:
