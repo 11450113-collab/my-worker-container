@@ -16,38 +16,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Install Wrangler CLI and dependencies
+        run: npm install -g wrangler && npm install
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and Push Docker Image
+      - name: Authenticate with Cloudflare Registry
         run: |
-          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          docker build --platform linux/amd64 -t ghcr.io/${REPO_LOWER}:latest .
-          docker push ghcr.io/${REPO_LOWER}:latest
+          wrangler containers registries credentials --push --expiration-minutes 15 > /tmp/cf-registry-auth.json
+          cat /tmp/cf-registry-auth.json | docker login registry.cloudflare.com -u _cloudflare_containers_token --password-stdin
 
-      - name: Make GHCR package public
+      - name: Build and Push to Cloudflare Registry
         run: |
-          PACKAGE_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]' | sed 's|^|ghcr.io/|')
-          echo "package_name=$PACKAGE_NAME"
-          curl -s -X PATCH \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/user/packages/container/${REPO_LOWER##*/}/visibility" \
-            -d '{"visibility":"public"}'
-
-      - name: Install Wrangler CLI
-        run: npm install -g wrangler
-
-      - name: Install npm dependencies
-        run: npm install
+          docker build --platform linux/amd64 -t registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest .
+          docker push registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest
 
       - name: Deploy to Cloudflare Workers
         run: wrangler deploy
