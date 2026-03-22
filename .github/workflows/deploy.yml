@@ -20,18 +20,10 @@ jobs:
         run: npm install -g wrangler
 
       - name: Build container image
-        run: |
-          docker build --platform linux/amd64 -t my-worker-container:latest .
 
       - name: Get Cloudflare Registry credentials and push
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          CRED_JSON=$(wrangler containers registries credentials --push --expiration-minutes 15 2>/dev/null)
-          echo "$CRED_JSON" | docker login registry.cloudflare.com -u _cloudflare_containers_token --password-stdin
-          REGISTRY_URL="registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest"
-          docker tag my-worker-container:latest "$REGISTRY_URL"
-          docker push "$REGISTRY_URL"
 
       - name: Deploy to Cloudflare Workers
         env:
