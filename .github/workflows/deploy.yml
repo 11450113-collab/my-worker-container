@@ -28,7 +28,6 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          # 將倉庫名稱轉為小寫，避免 Docker 報錯
           REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           docker build --platform linux/amd64 -t ghcr.io/${REPO_LOWER}:latest .
           docker push ghcr.io/${REPO_LOWER}:latest
@@ -36,13 +35,7 @@ jobs:
       - name: Install Wrangler CLI
         run: npm install -g wrangler
 
-      - name: Print worker.js content
-        run: cat worker.js
-
-      - name: Wrangler dry-run entry check
-        run: npx wrangler deploy --dry-run
-
-      - name: Deploy to Cloudflare Workers Container
+      - name: Deploy to Cloudflare Workers
+        run: wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: wrangler deploy

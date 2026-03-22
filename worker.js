@@ -1,18 +1,14 @@
-export class Terminal {
-	constructor(state, env) {
-		this.state = state;
-		this.env = env;
-	}
+import { Container } from "@cloudflare/containers";
 
-	async fetch(request) {
-		return new Response("Terminal Container OK");
-	}
+export class Terminal extends Container {
+  defaultPort = 7860;
+  sleepAfter = "10m";
 }
 
 export default {
-	async fetch(request, env, ctx) {
-		const id = env.TERMINAL.idFromName("main");
-		const stub = env.TERMINAL.get(id);
-		return await stub.fetch(request);
-	}
+  async fetch(request, env) {
+    const id = env.TERMINAL.idFromName("main");
+    const stub = env.TERMINAL.get(id);
+    return stub.fetch(request);
+  },
 };
