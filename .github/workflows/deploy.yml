@@ -16,10 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Wrangler CLI and dependencies
-        run: |
-          npm install -g wrangler && npm install
-          wrangler config --api-token ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Install Wrangler CLI
+        run: npm install -g wrangler
 
       - name: Deploy to Cloudflare Workers
         env:
