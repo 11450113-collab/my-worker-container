@@ -1,6 +1,7 @@
 name = "my-worker-container"
 main = "worker.js"
 compatibility_date = "2026-03-20"
+account_id = "f107bd5bc4bd453124ec014f2bb49a55"
 
 [[durable_objects.bindings]]
 name = "TERMINAL"
