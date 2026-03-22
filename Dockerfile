@@ -30,8 +30,6 @@ WORKDIR /home/user
 # Hugging Face Spaces / Container 預設 Port
 EXPOSE 7860
 
-# 啟動 ttyd
-# -W: 允許寫入 (可以輸入指令)
-# -p 7860: 指定 Port
-# bash: 執行的 Shell
-CMD ["ttyd", "-W", "-p", "7860", "bash"]
+# 啟動 ttyd，建議加上帳密保護
+# -c user:yourpassword 可自訂帳號密碼
+CMD ["ttyd", "-W", "-p", "7860", "-c", "user:yourpassword", "bash"]

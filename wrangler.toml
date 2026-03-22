@@ -1,16 +1,10 @@
 name = "my-ttyd-terminal"
 compatibility_date = "2024-04-01"
 
-# 針對 Workers Containers 的配置
 [containers]
-# 請替換為您在 Docker Hub 或 Cloudflare 上的鏡像路徑
-image = "your-username/ttyd-ubuntu:latest"
+# 使用 GitHub Container Registry (GHCR) 作為來源
+image = "ghcr.io/11450113-collab/my-worker-container:latest"
 
 [[containers.port_mappings]]
-# 將外部 HTTP 流量導向容器內的 7860 port
 external = 80
 internal = 7860
-
-# 如果您仍想保留標準 Worker 邏輯，可以使用以下設定（選填）
-# [main]
-# path = "worker.js"
