@@ -1,14 +1,16 @@
+# Cloudflare Durable Object Worker 設定
 name = "my-worker-container"
 main = "worker.js"
 compatibility_date = "2024-04-01"
 
-# 使用雙括號，並加入必要的 class_name
-[[containers]]
-class_name = "Terminal" # 這是必填的標識符
-image = "ghcr.io/11450113-collab/my-worker-container:latest"
-port_mappings = [
-	{ external = 80, internal = 7860 }
+[durable_objects]
+bindings = [
+  { name = "TERMINAL", class_name = "Terminal" }
 ]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Terminal"]
 
 # Durable Object 綁定，讓 class_name 與容器同步
 [[durable_objects.bindings]]

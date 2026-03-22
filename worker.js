@@ -1,10 +1,21 @@
-// Cloudflare Worker 路由，將流量導向 Durable Object Terminal
+
+export class Terminal {
+	constructor(state, env) {
+		this.state = state;
+		this.env = env;
+	}
+
+	async fetch(request) {
+		return new Response("Terminal OK");
+	}
+}
+
 export default {
 	async fetch(request, env, ctx) {
 		// 取得 Terminal Durable Object 的 id
-		const id = env.Terminal.idFromName("default");
-		const stub = env.Terminal.get(id);
-		// 將請求轉發給容器 Durable Object
+		const id = env.TERMINAL.idFromName("main");
+		const stub = env.TERMINAL.get(id);
+		// 將請求轉發給 Durable Object
 		return await stub.fetch(request);
 	}
 };
