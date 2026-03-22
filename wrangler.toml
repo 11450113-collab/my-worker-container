@@ -13,4 +13,4 @@ new_sqlite_classes = ["Terminal"]
 
 [[containers]]
 class_name = "Terminal"
-image = "./Dockerfile"
+image = "registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest"
