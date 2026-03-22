@@ -1,4 +1,5 @@
 name = "my-worker-container"
+main = "worker.js"
 compatibility_date = "2024-04-01"
 
 # 使用雙括號，並加入必要的 class_name
