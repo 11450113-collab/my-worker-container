@@ -17,18 +17,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Wrangler CLI and dependencies
-        run: npm install -g wrangler && npm install
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Check wrangler auth
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: wrangler whoami
+        run: |
+          npm install -g wrangler && npm install
+          wrangler config --api-token ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Deploy to Cloudflare Workers
         env:
