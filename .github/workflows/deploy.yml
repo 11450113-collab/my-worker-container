@@ -32,8 +32,11 @@ jobs:
           docker build --platform linux/amd64 -t ghcr.io/${REPO_LOWER}:latest .
           docker push ghcr.io/${REPO_LOWER}:latest
 
-      - name: Install Wrangler CLI and dependencies
-        run: npm install -g wrangler && npm install
+      - name: Install Wrangler CLI
+        run: npm install -g wrangler
+
+      - name: Install npm dependencies
+        run: npm ci
 
       - name: Deploy to Cloudflare Workers
         run: wrangler deploy

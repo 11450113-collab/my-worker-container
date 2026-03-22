@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
-    "@cloudflare/containers": "latest"
+    "@cloudflare/containers": "0.1.1"
   }
 }
