@@ -5,8 +5,6 @@ compatibility_date = "2024-04-01"
 [[containers]]
 class_name = "Terminal" # 這是必填的標識符
 image = "ghcr.io/11450113-collab/my-worker-container:latest"
-
-# 調整 port_mappings 的層級
-[[containers.port_mappings]]
-external = 80
-internal = 7860
+port_mappings = [
+	{ external = 80, internal = 7860 }
+]
