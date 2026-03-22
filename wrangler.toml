@@ -1,8 +1,7 @@
-name = "my-ttyd-terminal"
+name = "my-worker-container"
 compatibility_date = "2024-04-01"
 
-[containers]
-# 使用 GitHub Container Registry (GHCR) 作為來源
+[[containers]]
 image = "ghcr.io/11450113-collab/my-worker-container:latest"
 
 [[containers.port_mappings]]

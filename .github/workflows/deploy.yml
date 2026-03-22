@@ -26,12 +26,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+      - name: Build and Push Docker Image
+        run: |
+          # 將倉庫名稱轉為小寫，避免 Docker 報錯
+          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          docker build --platform linux/amd64 -t ghcr.io/${REPO_LOWER}:latest .
+          docker push ghcr.io/${REPO_LOWER}:latest
 
       - name: Install Wrangler CLI
         run: npm install -g wrangler
