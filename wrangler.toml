@@ -9,3 +9,8 @@ image = "ghcr.io/11450113-collab/my-worker-container:latest"
 port_mappings = [
 	{ external = 80, internal = 7860 }
 ]
+
+# Durable Object 綁定，讓 class_name 與容器同步
+[[durable_objects.bindings]]
+name = "Terminal"
+class_name = "Terminal"
