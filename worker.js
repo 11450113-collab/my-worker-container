@@ -11,9 +11,17 @@ export class Terminal extends DurableObject {
   }
 
   async fetch(request) {
-    // 將請求轉發到容器內的 7860 Port (對應 Dockerfile)
+    // 獲取容器的 7860 端口
     const port = this.ctx.container.getTcpPort(7860);
-    return port.fetch(request);
+
+    // 【關鍵修復】將外部進來的 https 請求強制轉為 http，因為 Cloudflare 到容器的內部連線不需要也不支援 TLS
+    const url = new URL(request.url);
+    url.protocol = "http:";
+    
+    // 使用新的 HTTP URL 重新構造請求，保留原始的 headers 與 body
+    const modifiedRequest = new Request(url.toString(), request);
+
+    return port.fetch(modifiedRequest);
   }
 }
 
