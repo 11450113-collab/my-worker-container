@@ -36,6 +36,12 @@ jobs:
       - name: Install Wrangler CLI
         run: npm install -g wrangler
 
+      - name: Print worker.js content
+        run: cat worker.js
+
+      - name: Wrangler dry-run entry check
+        run: npx wrangler deploy --dry-run
+
       - name: Deploy to Cloudflare Workers Container
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
