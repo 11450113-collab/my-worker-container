@@ -2,26 +2,29 @@ name: Deploy to Cloudflare Workers Container
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install Wrangler CLI
-        run: npm install -g wrangler
+      - name: Log in to Cloudflare Container Registry
+        # 使用您的 Account ID 和 API Token 登入 Cloudflare 專屬的鏡像庫
+        run: echo "${{ secrets.CLOUDFLARE_API_TOKEN }}" | docker login registry.cloudflare.com -u ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} --password-stdin
 
-
+      - name: Build and Push Docker Image to Cloudflare
+        run: |
+          # 將鏡像標記為 Cloudflare 要求的格式
+          IMAGE_URL="registry.cloudflare.com/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/my-worker-container:latest"
+          docker build --platform linux/amd64 -t $IMAGE_URL .
+          docker push $IMAGE_URL
 
       - name: Deploy to Cloudflare Workers
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: wrangler deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

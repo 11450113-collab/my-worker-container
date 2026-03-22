@@ -1,16 +1,16 @@
 name = "my-worker-container"
 main = "worker.js"
-compatibility_date = "2026-03-20"
-account_id = "f107bd5bc4bd453124ec014f2bb49a55"
+compatibility_date = "2024-04-01"
+
+[[containers]]
+class_name = "Terminal"
+# 修正：直接指向 Cloudflare 內部的鏡像庫
+image = "registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest"
+
+[[containers.port_mappings]]
+external = 80
+internal = 7860
 
 [[durable_objects.bindings]]
 name = "TERMINAL"
 class_name = "Terminal"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["Terminal"]
-
-[[containers]]
-class_name = "Terminal"
-image = "registry.cloudflare.com/f107bd5bc4bd453124ec014f2bb49a55/my-worker-container:latest"
