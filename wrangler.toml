@@ -16,3 +16,7 @@ class_name = "Terminal"
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["Terminal"]
+
+[[migrations]]
+tag = "v2"
+new_classes = ["Terminal"]
