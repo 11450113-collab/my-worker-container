@@ -11,8 +11,3 @@ image = "./Dockerfile"
 [[durable_objects.bindings]]
 name = "TERMINAL"
 class_name = "Terminal"
-
-# 【必須】Cloudflare 強制規定：使用容器/Durable Object 必須初始化資料庫遷移
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["Terminal"]
