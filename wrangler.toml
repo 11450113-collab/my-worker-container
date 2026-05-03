@@ -3,13 +3,10 @@ main = "worker.js"
 compatibility_date = "2024-04-01"
 
 [[containers]]
+max_instances = 10
 class_name = "Terminal"
 # 明確指定為本地的 Dockerfile，Wrangler 會自動編譯並上傳
 image = "./Dockerfile"
-
-[[containers.port_mappings]]
-external = 80
-internal = 7860
 
 [[durable_objects.bindings]]
 name = "TERMINAL"
@@ -17,5 +14,5 @@ class_name = "Terminal"
 
 # 【必須】Cloudflare 強制規定：使用容器/Durable Object 必須初始化資料庫遷移
 [[migrations]]
-tag = "v1"
+tag = "v2"
 new_sqlite_classes = ["Terminal"]
