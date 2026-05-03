@@ -4,13 +4,13 @@ compatibility_date = "2024-04-01"
 
 [[containers]]
 max_instances = 10
-class_name = "Terminal"
+class_name = "TerminalContainer"
 image = "./Dockerfile"
 
 [[durable_objects.bindings]]
-name = "TERMINAL"
-class_name = "Terminal"
+name = "TERMINAL_CONTAINER"
+class_name = "TerminalContainer"
 
 [[migrations]]
-tag = "v1"
-new_sqlite_classes = ["Terminal"]
+tag = "v2"
+new_sqlite_classes = ["TerminalContainer"]
