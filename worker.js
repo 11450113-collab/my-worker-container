@@ -17,6 +17,8 @@ export class Terminal extends TerminalBase {}
 
 export class TerminalV2 extends TerminalBase {}
 
+export class TerminalContainer extends TerminalBase {}
+
 export default {
     async fetch(request, env) {
         try {
