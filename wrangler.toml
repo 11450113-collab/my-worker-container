@@ -2,15 +2,10 @@ name = "my-worker-container"
 main = "worker.js"
 compatibility_date = "2024-04-01"
 
-[[containers]]
-max_instances = 10
-class_name = "TerminalContainer"
-image = "./Dockerfile"
-
 [[durable_objects.bindings]]
-name = "TERMINAL_CONTAINER"
-class_name = "TerminalContainer"
+name = "TERMINAL"
+class_name = "Terminal"
 
 [[migrations]]
-tag = "v2"
-new_sqlite_classes = ["TerminalContainer"]
+tag = "v1"
+new_sqlite_classes = ["Terminal"]
