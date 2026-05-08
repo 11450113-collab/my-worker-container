@@ -1,4 +1,4 @@
-export class TerminalV2 {
+class TerminalBase {
     constructor(state) {
         this.state = state;
     }
@@ -12,6 +12,10 @@ export class TerminalV2 {
         });
     }
 }
+
+export class Terminal extends TerminalBase {}
+
+export class TerminalV2 extends TerminalBase {}
 
 export default {
     async fetch(request, env) {
