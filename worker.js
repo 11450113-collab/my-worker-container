@@ -1,4 +1,4 @@
-export class Terminal {
+export class TerminalV2 {
     constructor(state) {
         this.state = state;
     }
